@@ -1,0 +1,17 @@
+---
+- name: Generate Debug
+  template:
+    src: "ldp_config.j2"
+    dest: "debug_configs/{{ inventory_hostname}}_ldp_config.txt"
+
+- name: Generate LDP Configuration
+  junos_config:
+    lines: "{{ lookup('template', 'ldp_config.j2').split('\n') }}"
+    comment: "Configured LDP"
+  when: ldp_remove == False
+
+- name: Remove LDP Configuration
+  junos_config:
+    lines: "{{ lookup('template', 'ldp_remove.j2').split('\n') }}"
+    comment: "Removed LDP"
+  when: ldp_remove == True

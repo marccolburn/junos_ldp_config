@@ -1,0 +1,4 @@
+{% for interface in ldp_interfaces %}
+delete interfaces {{ interface.name }} unit {{ interface.unit }} family mpls
+delete protocols ldp interface {{ interface.name }}.{{ interface.unit }}
+{% endfor %}
